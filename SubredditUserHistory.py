@@ -16,7 +16,8 @@ class SubredditDemographics():
             "nepal" : {"count" : 0, "users" : []},
             "usa" : {"count" : 0, "users" : []},
             "uk" : {"count" : 0, "users" : []},
-            "canada" : {"count" : 0, "users" : []}
+            "canada" : {"count" : 0, "users" : []},
+            "islam" : {"count" : 0, "users" : []}
         }
 
 
@@ -52,7 +53,7 @@ class SubredditDemographics():
             try:
                 user_instance = self.reddit_instance.redditor(user)
                 self.checkIfPakistani(user_instance)
-                # self.checkIfChutyapa(user_instance)
+                self.checkIfBulla(user_instance)
                 self.checkIfNepali(user_instance)
                 self.checkIfBangladeshi(user_instance)
                 self.checkIfUSA(user_instance)
@@ -102,15 +103,13 @@ class SubredditDemographics():
                 print("Yanki spotted")
                 return
 
-    # def checkIfChutyapa(self, user_instance):
-    #     for submission in user_instance.submissions.hot(limit=20):
-    #         if str(submission.subreddit).strip().lower() == "chutyapa":
-    #             self.sub_dict["pakistan"]["count"] += 1
-    #             self.sub_dict["pakistan"]["users"].append(user_instance.name)
-    #             self.sub_dict["chutyapa"]["count"] += 1
-    #             self.sub_dict["chutyapa"]["users"].append(user_instance.name)
-    #             print("pakistani spotted")
-    #             return
+    def checkIfBulla(self, user_instance):
+        for submission in user_instance.submissions.hot(limit=20):
+            if str(submission.subreddit).strip().lower() == "islam":
+                self.sub_dict["islam"]["count"] += 1
+                self.sub_dict["islam"]["users"].append(user_instance.name)
+                print("Pincturewala Spotted!")
+                return
     
     def checkIfNepali(self, user_instance):
         for submission in user_instance.submissions.hot(limit=20):
