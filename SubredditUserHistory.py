@@ -14,15 +14,29 @@ class SubredditDemographics():
 
     def fetchUsers(self):
         self.fetchPosters()
-        # self.fetchCommenter()
+        self.fetchCommenter()
 
     def fetchPosters(self):
-        for posts in self.subreddit.hot(limit=100):
-            # print(posts.author.name)
-            if posts.author.name not in self.users_list:
-                print(type(posts.author.name))
-                self.users_list.append(posts.author.name)
-                self.users.write(posts.author.name + "\n")
+        for submission in self.subreddit.hot(limit=100):
+            # print(submission.author.name)
+            try:
+                if submission.author.name not in self.users_list:
+                    print(type(submission.author.name))
+                    self.users_list.append(submission.author.name)
+                    self.users.write(submission.author.name + "\n")
+            except:
+                print("Error Happened!")
+
+    def fetchCommenter(self):
+        for submission in self.subreddit.hot(limit=100):
+            submission.comments.replace_more(limit=None)
+            for comment in submission.comments.list():
+                try:
+                    if comment.author.name not in self.users_list:
+                        self.users_list.append(comment.author.name)
+                        self.users.write(comment.author.name + "\n")
+                except:
+                    print("Error Happened!")
         self.users.close()
         self.demographics.close()
 
@@ -32,4 +46,4 @@ subname = "india"
 subreddit = reddit.subreddit(subname)
 
 obj = SubredditDemographics(subname,subreddit)
-obj.fetchUsers()
+# obj.fetchUsers()
