@@ -1,5 +1,6 @@
 #Idea here to create a script which can we used to depict the demographics of a subreddit
 #we will later employ graphs,etc. to visualise the data
+#subs : r/india, r/indiaspeaks, r/pakistan r/chutyapa, r/islam r/izlam, r/kerimama r/bangladesh,r/nepal2 r/nepal, r/murica r/usa, r/canada, r/unitedkingdom
 import praw
 
 class SubredditDemographics():
@@ -17,7 +18,9 @@ class SubredditDemographics():
             "usa" : {"count" : 0, "users" : []},
             "uk" : {"count" : 0, "users" : []},
             "canada" : {"count" : 0, "users" : []},
-            "islam" : {"count" : 0, "users" : []}
+            "islam" : {"count" : 0, "users" : []},
+            "randia" : {"count" : 0, "users" : []},
+            "indiaspeaks" : {"count" : 0, "users" : []}
         }
 
 
@@ -59,6 +62,8 @@ class SubredditDemographics():
                 self.checkIfUSA(user_instance)
                 self.checkIfUk(user_instance)
                 self.checkIfCanada(user_instance)
+                self.checkIfRandia(user_instance)
+                self.checkIfIndiaSpeaks(user_instance)
             except:
                 print("Error occuried while CAA!")
         self.writeOutput()
@@ -73,7 +78,7 @@ class SubredditDemographics():
     
     def checkIfBangladeshi(self, user_instance):
         for submission in user_instance.submissions.hot(limit=20):
-            if str(submission.subreddit).strip().lower() == "bangladesh":
+            if str(submission.subreddit).strip().lower() == "bangladesh" or str(submission.subreddit).strip().lower() == "kiremama":
                 self.sub_dict["bangladesh"]["count"] += 1
                 self.sub_dict["bangladesh"]["users"].append(user_instance.name)
                 print("Bangladeshi spotted")
@@ -81,7 +86,7 @@ class SubredditDemographics():
 
     def checkIfCanada(self, user_instance):
         for submission in user_instance.submissions.hot(limit=20):
-            if str(submission.subreddit).strip().lower() == "canada":
+            if str(submission.subreddit).strip().lower() == "canada" or str(submission.subreddit).strip().lower() == "metacanada":
                 self.sub_dict["canada"]["count"] += 1
                 self.sub_dict["canada"]["users"].append(user_instance.name)
                 print("Canadi spotted")
@@ -89,7 +94,7 @@ class SubredditDemographics():
     
     def checkIfUk(self, user_instance):
         for submission in user_instance.submissions.hot(limit=20):
-            if str(submission.subreddit).strip().lower() == "uk":
+            if str(submission.subreddit).strip().lower() == "unitedkingdom" or str(submission.subreddit).strip().lower() == "uk":
                 self.sub_dict["uk"]["count"] += 1
                 self.sub_dict["uk"]["users"].append(user_instance.name)
                 print("British spotted")
@@ -97,7 +102,7 @@ class SubredditDemographics():
 
     def checkIfUSA(self, user_instance):
         for submission in user_instance.submissions.hot(limit=20):
-            if str(submission.subreddit).strip().lower() == "usa":
+            if str(submission.subreddit).strip().lower() == "usa" or str(submission.subreddit).strip().lower() == "murica":
                 self.sub_dict["usa"]["count"] += 1
                 self.sub_dict["usa"]["users"].append(user_instance.name)
                 print("Yanki spotted")
@@ -105,7 +110,7 @@ class SubredditDemographics():
 
     def checkIfBulla(self, user_instance):
         for submission in user_instance.submissions.hot(limit=20):
-            if str(submission.subreddit).strip().lower() == "islam":
+            if str(submission.subreddit).strip().lower() == "islam" or str(submission.subreddit).strip().lower() == "izlam":
                 self.sub_dict["islam"]["count"] += 1
                 self.sub_dict["islam"]["users"].append(user_instance.name)
                 print("Pincturewala Spotted!")
@@ -119,6 +124,23 @@ class SubredditDemographics():
                 print("Nepali spotted")
                 return
 
+    def checkIfRandia(self, user_instance):
+        for submission in user_instance.submissions.hot(limit=20):
+            if str(submission.subreddit).strip().lower() == "india" or str(submission.subreddit).strip().lower() == "librandu":
+                self.sub_dict["randia"]["count"] += 1
+                self.sub_dict["randia"]["users"].append(user_instance.name)
+                print("Randian spotted")
+                return
+    
+    def checkIfIndiaSpeaks(self, user_instance):
+        for submission in user_instance.submissions.hot(limit=20):
+            if str(submission.subreddit).strip().lower() == "indiaspeaks" or str(submission.subreddit).strip().lower() == "chodi":
+                self.sub_dict["indiaspeaks"]["count"] += 1
+                self.sub_dict["indiaspeaks"]["users"].append(user_instance.name)
+                print("Virat spotted")
+                return
+        
+
     def writeOutput(self):
         for key in self.sub_dict.keys():
             temp = open(str(key+".txt"),"a")
@@ -127,6 +149,7 @@ class SubredditDemographics():
             temp.write(str("\nUSERS ARE : \n"))
             for user in self.sub_dict[key]["users"]:
                 temp.write(user + "\n")
+            temp.write("*"*100 + "\n")
             temp.close()
         self.closeEverything()
      
@@ -142,7 +165,6 @@ subreddit = reddit.subreddit(subname)
 obj = SubredditDemographics(subname,subreddit,reddit)
 obj.fetchUsers()
 obj.checkDemography()
-# obj.closeEverything()
 
 
 #some observatios related to praw

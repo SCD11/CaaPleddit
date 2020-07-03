@@ -1,0 +1,7 @@
+Pakistan : 9
+Bangladesh : 1
+Nepal : 2
+Usa : 0
+Uk : 0
+Canada : 7
+Islam : 4
