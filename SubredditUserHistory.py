@@ -73,7 +73,7 @@ class SubredditDemographics():
 
     def checkIfPakistani(self, user_instance):
         for submission in user_instance.submissions.hot(limit=25):
-            if str(submission.subreddit).strip().lower() == "pakistan" or str(submission.subreddit).strip().lower() == "chutyapa":
+            if str(submission.subreddit).strip().lower() == "pakistan" or str(submission.subreddit).strip().lower() == "chutyapa" or str(submission.subreddit).strip().lower() == "kashmiri":
                 self.sub_dict["pakistan"]["count"] += 1
                 self.sub_dict["pakistan"]["users"].append(user_instance.name)
                 print("pakistani spotted")
