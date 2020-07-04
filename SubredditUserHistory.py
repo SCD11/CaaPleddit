@@ -36,8 +36,10 @@ class SubredditDemographics():
                     print(type(submission.author.name))
                     self.users_list.append(submission.author.name)
                     self.users.write(submission.author.name + "\n")
-            except:
-                print("Error Happened!")
+                else:
+                    print(submission.author.name + "is posting multiple ones!")
+            except Exception as e:
+                print("Error Happened! : ",e)
 
     def fetchCommenter(self):
         for submission in self.subreddit.hot(limit=50):
@@ -47,8 +49,9 @@ class SubredditDemographics():
                     if comment.author.name not in self.users_list:
                         self.users_list.append(comment.author.name)
                         self.users.write(comment.author.name + "\n")
-                except:
-                    print("Error Happened!")
+                except Exception as e:
+                    print("Error Happened while Reading Comments! : ",e)
+
 
     def checkDemography(self):
         print("*"*100)
@@ -64,12 +67,12 @@ class SubredditDemographics():
                 self.checkIfCanada(user_instance)
                 self.checkIfRandia(user_instance)
                 self.checkIfIndiaSpeaks(user_instance)
-            except:
-                print("Error occuried while CAA!")
+            except Exception as e:
+                print("Error occuried while CAA ! : ",e)
         self.writeOutput()
 
     def checkIfPakistani(self, user_instance):
-        for submission in user_instance.submissions.hot(limit=20):
+        for submission in user_instance.submissions.hot(limit=25):
             if str(submission.subreddit).strip().lower() == "pakistan" or str(submission.subreddit).strip().lower() == "chutyapa":
                 self.sub_dict["pakistan"]["count"] += 1
                 self.sub_dict["pakistan"]["users"].append(user_instance.name)
@@ -77,7 +80,7 @@ class SubredditDemographics():
                 return
     
     def checkIfBangladeshi(self, user_instance):
-        for submission in user_instance.submissions.hot(limit=20):
+        for submission in user_instance.submissions.hot(limit=25):
             if str(submission.subreddit).strip().lower() == "bangladesh" or str(submission.subreddit).strip().lower() == "kiremama":
                 self.sub_dict["bangladesh"]["count"] += 1
                 self.sub_dict["bangladesh"]["users"].append(user_instance.name)
@@ -85,7 +88,7 @@ class SubredditDemographics():
                 return
 
     def checkIfCanada(self, user_instance):
-        for submission in user_instance.submissions.hot(limit=20):
+        for submission in user_instance.submissions.hot(limit=25):
             if str(submission.subreddit).strip().lower() == "canada" or str(submission.subreddit).strip().lower() == "metacanada":
                 self.sub_dict["canada"]["count"] += 1
                 self.sub_dict["canada"]["users"].append(user_instance.name)
@@ -93,7 +96,7 @@ class SubredditDemographics():
                 return
     
     def checkIfUk(self, user_instance):
-        for submission in user_instance.submissions.hot(limit=20):
+        for submission in user_instance.submissions.hot(limit=25):
             if str(submission.subreddit).strip().lower() == "unitedkingdom" or str(submission.subreddit).strip().lower() == "uk":
                 self.sub_dict["uk"]["count"] += 1
                 self.sub_dict["uk"]["users"].append(user_instance.name)
@@ -101,7 +104,7 @@ class SubredditDemographics():
                 return
 
     def checkIfUSA(self, user_instance):
-        for submission in user_instance.submissions.hot(limit=20):
+        for submission in user_instance.submissions.hot(limit=25):
             if str(submission.subreddit).strip().lower() == "usa" or str(submission.subreddit).strip().lower() == "murica":
                 self.sub_dict["usa"]["count"] += 1
                 self.sub_dict["usa"]["users"].append(user_instance.name)
@@ -109,7 +112,7 @@ class SubredditDemographics():
                 return
 
     def checkIfBulla(self, user_instance):
-        for submission in user_instance.submissions.hot(limit=20):
+        for submission in user_instance.submissions.hot(limit=25):
             if str(submission.subreddit).strip().lower() == "islam" or str(submission.subreddit).strip().lower() == "izlam":
                 self.sub_dict["islam"]["count"] += 1
                 self.sub_dict["islam"]["users"].append(user_instance.name)
@@ -117,7 +120,7 @@ class SubredditDemographics():
                 return
     
     def checkIfNepali(self, user_instance):
-        for submission in user_instance.submissions.hot(limit=20):
+        for submission in user_instance.submissions.hot(limit=25):
             if str(submission.subreddit).strip().lower() == "nepal":
                 self.sub_dict["nepal"]["count"] += 1
                 self.sub_dict["nepal"]["users"].append(user_instance.name)
@@ -125,7 +128,7 @@ class SubredditDemographics():
                 return
 
     def checkIfRandia(self, user_instance):
-        for submission in user_instance.submissions.hot(limit=20):
+        for submission in user_instance.submissions.hot(limit=25):
             if str(submission.subreddit).strip().lower() == "india" or str(submission.subreddit).strip().lower() == "librandu":
                 self.sub_dict["randia"]["count"] += 1
                 self.sub_dict["randia"]["users"].append(user_instance.name)
@@ -133,7 +136,7 @@ class SubredditDemographics():
                 return
     
     def checkIfIndiaSpeaks(self, user_instance):
-        for submission in user_instance.submissions.hot(limit=20):
+        for submission in user_instance.submissions.hot(limit=25):
             if str(submission.subreddit).strip().lower() == "indiaspeaks" or str(submission.subreddit).strip().lower() == "chodi":
                 self.sub_dict["indiaspeaks"]["count"] += 1
                 self.sub_dict["indiaspeaks"]["users"].append(user_instance.name)
